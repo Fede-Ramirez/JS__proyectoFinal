@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "roboto";
+}
+
+#contenedorCards{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+h1{
+    text-align: center;
+}
+
+.aviso{
+    color: lightgreen;
+    font-size: 30px;
+}
+
+.advertencia{
+    color: red;
+}
+
+li {
+    list-style-type: none;
+}
+
+#finalizar {
+    margin: 10px 0px;
+}
+
+.ofertas {
+    margin: 10px 0px;
+}
+
+.carousel {
+    background-color: lightgrey;
+}
+
+.tipografiaLogo {
+    font-family: "cormorant upright", serif;
+    font-size: 30px;
+}
+
+.criterios {
+    margin-top: 15px;
+}
+
+#formularioCompra {
+    margin: 10px 0px;
+}
+
+.carritoIcono {
+    margin-left: 5px;
+}
+
+.items {
+    margin: 0px;
+}
+
+.copyright {
+    margin: 10px 0px;
+}
+
+#formulario {
+    margin: 10px 0px;
+}
+
+.botones {
+    width: 35%;
+}
+
+.contenedorBotones {
+    display: flex; 
+    justify-content: space-evenly;
+}
