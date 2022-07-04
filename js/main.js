@@ -105,6 +105,19 @@ function agregarAlCarrito (productoComprado) {
         console.log(posicion);
         carrito[posicion].cantidad += 1;
         document.getElementById(productoComprado.id).innerHTML=carrito[posicion].cantidad;
+
+        Toastify({
+            text: `Agregaste otra unidad de ${productoComprado.descripcion} al carrito`,
+            duration: 3000,
+            destination: "https://github.com/apvarun/toastify-js",
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+            onClick: function(){} // Callback after click
+        }).showToast();
     }
     // Al agregar un producto, el aviso de "el carrito está vacío" desaparecerá
     vacio.innerHTML = ``
@@ -147,10 +160,26 @@ function quitarDelCarrito(id){
     let indice=carrito.findIndex(producto => producto.id==id);
     carrito.splice(indice,1);
     localStorage.setItem("carrito", JSON.stringify(carrito));
+
+    Toastify({
+        text: `Eliminaste un producto del carrito`,
+        duration: 3000,
+        destination: "https://github.com/apvarun/toastify-js",
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "red",
+        },
+        onClick: function(){} // Callback after click
+    }).showToast();
+    
+    
     // La fila del producto es removida
     let fila=document.getElementById(`fila${id}`);
     document.getElementById("tablaCarrito").removeChild(fila);
     carrito.length === 0 ? vacio.innerHTML = `<strong>El carrito está vacío</strong>` : vacio.innerHTML = ``
+
     // El total de la compra se verá afectado también por la eliminación de un producto
     document.querySelector("#total").innerText=(`Total de su compra: $ ${calcularTotal()}`);
 }
@@ -251,119 +280,138 @@ async function obtenerValorDolar() {
 
 // Botón a través del cual el usuario podrá dar por finalizada su compra. 
 finalizarCompra.onclick=()=>{
-    // Una vez presionado le saltará una alerta y se desplegará un formulario que deberá completar con algunos datos.
-    Swal.fire({
-        title: 'Deseas avanzar con la compra?',
-        text: "Selecciona una opción",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si!'
-    }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Entendido!',
-                    'Muchas gracias por tu compra!',
-                    'success'
-                    )
-                    formularioCompra.innerHTML += `
-                    <div>
-                    <h2>Formulario de compra</h2>
-                    </div>
-                    <div>
-                    <p>Por favor, completa el siguiente formulario de compra y un vendedor se comunicará contigo para concretar la entrega.</p>
-                    </div>
-                    <form class="row gy-2 gx-3 align-items-center" id="confirmacionCompra">
-                    <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInput">Name</label>
-                    <input type="text" class="form-control" id="autoSizingInput" placeholder="Nombre y Apellido" required>
-                    </div>
-                    <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingInputGroup">Username</label>
-                    <div class="input-group">
-                    <div class="input-group-text">@</div>
-                        <input type="email" class="form-control" id="autoSizingInputGroup" placeholder="Email" required>
-                    </div>
-                </div>
-                <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingSelect">Preference</label>
-                    <select class="form-select" id="autoSizingSelect" required>
-                    <option selected>Forma de entrega</option>
-                    <option value="1">Envío</option>
-                    <option value="2">Retiro en local</option>
-                    </select>
-                    </div>
-                    <div class="col-auto">
-                    <label class="visually-hidden" for="autoSizingSelect">Preference</label>
-                    <select class="form-select" id="autoSizingSelect" required>
-                    <option selected>Medio de pago</option>
-                    <option value="1">Mercado pago</option>
-                    <option value="2">Débito</option>
-                    <option value="3">Crédito</option>
-                    </select>
-                    </div>
-                    <div class="col-auto">
-                    <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="autoSizingCheck" required>
-                    <label class="form-check-label" for="autoSizingCheck">
-                    Acepto términos y condiciones
-                    </label>
-                    </div>
-                    </div>
-                    <div class="col-auto">
-                    <button type="submit" class="btn btn-primary" id="confirmacionCompra">Enviar</button>
-                    </div>
-                    </form>`
-                    
-                    let confirmacionCompra = document.getElementById("confirmacionCompra");
-                    confirmacionCompra.addEventListener("submit", validarCompra); 
-                    
-                    function validarCompra (e) {
-                    e.preventDefault();
+    if (carrito.length === 0) {
+        // El usuario no podrá avanzar si el carrito está vacío.
+        Swal.fire({
+            icon: 'error',
+            title: 'Atención',
+            text: 'Debes llenar el carrito para continuar',
+        }) 
+    } else {
+        // Una vez presionado le saltará una alerta y se desplegará un formulario que deberá completar con algunos datos.
+        Swal.fire({
+            title: 'Deseas avanzar con la compra?',
+            text: "Selecciona una opción",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si!'
+        }).then((result) => {
+                if (result.isConfirmed) {
                     Swal.fire(
-                        'Compra confirmada!',
-                        'Un vendedor se comunicará contigo vía mail dentro de 24 hs hábiles',
+                        'Entendido!',
+                        'Muchas gracias por tu compra!',
                         'success'
-                    )
+                        )
+                        formularioCompra.innerHTML += `
+                        <div>
+                        <h2>Formulario de compra</h2>
+                        </div>
+                        <div>
+                        <p>Por favor, completa el siguiente formulario de compra y un vendedor se comunicará contigo para concretar la entrega.</p>
+                        </div>
+                        <form class="row gy-2 gx-3 align-items-center" id="confirmacionCompra">
+                        <div class="col-auto">
+                        <label class="visually-hidden" for="autoSizingInput">Name</label>
+                        <input type="text" class="form-control" id="autoSizingInput" placeholder="Nombre y Apellido" required>
+                        </div>
+                        <div class="col-auto">
+                        <label class="visually-hidden" for="autoSizingInputGroup">Username</label>
+                        <div class="input-group">
+                        <div class="input-group-text">@</div>
+                            <input type="email" class="form-control" id="autoSizingInputGroup" placeholder="Email" required>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                        <select class="form-select" id="autoSizingSelect" required>
+                        <option selected>Forma de entrega</option>
+                        <option value="1">Envío</option>
+                        <option value="2">Retiro en local</option>
+                        </select>
+                        </div>
+                        <div class="col-auto">
+                        <label class="visually-hidden" for="autoSizingSelect">Preference</label>
+                        <select class="form-select" id="autoSizingSelect" required>
+                        <option selected>Medio de pago</option>
+                        <option value="1">Mercado pago</option>
+                        <option value="2">Débito</option>
+                        <option value="3">Crédito</option>
+                        </select>
+                        </div>
+                        <div class="col-auto">
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="autoSizingCheck" required>
+                        <label class="form-check-label" for="autoSizingCheck">
+                        Acepto términos y condiciones
+                        </label>
+                        </div>
+                        </div>
+                        <div class="col-auto">
+                        <button type="submit" class="btn btn-primary" id="confirmacionCompra">Enviar</button>
+                        </div>
+                        </form>`
+                        
+                        let confirmacionCompra = document.getElementById("confirmacionCompra");
+                        confirmacionCompra.addEventListener("submit", validarCompra); 
+                        
+                        function validarCompra (e) {
+                        e.preventDefault();
+                        Swal.fire(
+                            'Compra confirmada!',
+                            'Un vendedor se comunicará contigo vía mail dentro de 24 hs hábiles',
+                            'success'
+                        )
+                        }
                     }
-                }
-            })
+                })
+    }
         }
 
 // El usuario también tendrá la opción de eliminar todo su carrito de compras a través de botón.  
 vaciarCarrito.onclick=()=>{
-    // Advertencia de eliminación de carrito
-    Swal.fire({
-        title: 'Estas seguro que deseas vaciar el carrito?',
-        text: "",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire(
-                    'Listo!',
-                    'El carrito se ha vaciado.',
-                    'success'
-                )
-                // Los productos son removidos del local storage.
-                localStorage.removeItem("carrito");
-                vaciarTabla();
-                console.log(carrito);
-                
-                // Los productos se eliminan de la tabla
-                function vaciarTabla() {
-                tabla.innerHTML = " ";
-                formularioCompra.innerHTML = " ";
-                carrito.splice(0, carrito.length);
-                vacio.innerHTML = `<strong>El carrito está vacío</strong>`
-                document.querySelector("#total").innerText=(`Total de su compra: $ ${calcularTotal()}`);
+    if (carrito.length === 0) {
+        // El usuario será alertado con este aviso si presiona este botón y no ha agregado ningún producto al carrito.
+        Swal.fire({
+            icon: 'error',
+            title: 'Atención',
+            text: 'No puedes vaciar tu carrito porque está vacío',
+        })  
+    } else {
+        // Advertencia de eliminación de carrito
+        // Si el carrito tiene al menos un producto, podrá vaciarlo completamente
+        Swal.fire({
+            title: 'Estas seguro que deseas vaciar el carrito?',
+            text: "",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Listo!',
+                        'El carrito se ha vaciado.',
+                        'success'
+                    )
+                    // Los productos son removidos del local storage.
+                    localStorage.removeItem("carrito");
+                    vaciarTabla();
+                    console.log(carrito);
+                    
+                    // Los productos se eliminan de la tabla
+                    function vaciarTabla() {
+                    tabla.innerHTML = " ";
+                    formularioCompra.innerHTML = " ";
+                    carrito.splice(0, carrito.length);
+                    vacio.innerHTML = `<strong>El carrito está vacío</strong>`
+                    document.querySelector("#total").innerText=(`Total de su compra: $ ${calcularTotal()}`);
+                    }
                 }
-            }
-    })
+        })
+    }
 }
 
 // Mediante el botón de SUSCRIBIRME se simulará un proceso de suscripción para que el usuario reciba ofertas vía mail. 
