@@ -15,7 +15,7 @@ let suscripcion = document.getElementById("suscribirse");
 // Si el carrito está vacio el usuario podrá visualizarlo en la tabla de los productos, si no, no verá el aviso pues habrá productos en el carrito
 carrito.length === 0 ? vacio.innerHTML = `<strong>El carrito está vacío</strong>` : vacio.innerHTML = ``
 
-//Evento-Cuando la ventana está cargada
+//Evento para cuando la ventana está cargada
 window.onload=()=>{
     document.querySelector("#fila_prueba").style.background="lightsalmon";
     obtenerValorDolar();
