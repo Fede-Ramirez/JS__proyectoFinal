@@ -4,7 +4,7 @@
         "marca": "Éxito",
         "descripcion": "Hojas rayadas Nº 3 x 480",
         "precio": 1500,
-        "img": "../assets/img/exito.jpg",
+        "img": "assets/img/exito.jpg",
         "tipo": "hojas"
     },
     {
@@ -12,7 +12,7 @@
         "marca": "Filgo",
         "descripcion": "Lápices de colores x 12",
         "precio": 400,
-        "img": "../assets/img/filgo.jpg",
+        "img": "assets/img/filgo.jpg",
         "tipo": "utiles"
     },
     {
@@ -20,7 +20,7 @@
         "marca": "AVON",
         "descripcion": "Cuadernos A4 x unidad",
         "precio": 450,
-        "img": "../assets/img/avon.jpg",
+        "img": "assets/img/avon.jpg",
         "tipo": "cuadernos"
         
     },
@@ -29,7 +29,7 @@
         "marca": "Maped",
         "descripcion": "Regla, transportador y escuadra",
         "precio": 500,
-        "img": "../assets/img/promoRegla.jpg",
+        "img": "assets/img/promoRegla.jpg",
         "tipo": "utiles"
     },
     {
@@ -37,7 +37,7 @@
         "marca": "Faber Castell",
         "descripcion": "Lápiceras multicolor x 5",
         "precio": 350,
-        "img": "../assets/img/lapiceras.jpg",
+        "img": "assets/img/lapiceras.jpg",
         "tipo": "utiles"
     },
     {
@@ -45,7 +45,7 @@
         "marca": "Casio",
         "descripcion": "Calculadora científica",
         "precio": 6000,
-        "img": "../assets/img/calculadora.jpg",
+        "img": "assets/img/calculadora.jpg",
         "tipo": "calculadoras"
     },
     {
@@ -53,7 +53,7 @@
         "marca": "Rivadavia",
         "descripcion": "Hojas rayadas Nº 3 x 480",
         "precio": 2000,
-        "img": "../assets/img/rivadavia.jpg",
+        "img": "assets/img/rivadavia.jpg",
         "tipo": "hojas"
     }, 
     {
@@ -61,7 +61,7 @@
         "marca": "Pelikan",
         "descripcion": "Resaltadores x 6",
         "precio": 400,
-        "img": "../assets/img/resaltadores.jpg",
+        "img": "assets/img/resaltadores.jpg",
         "tipo": "utiles"
     },
     {
@@ -69,7 +69,7 @@
         "marca": "Carpeta Nº 3",
         "descripcion": "Carpetas Nº 3 x unidad",
         "precio": 600,
-        "img": "../assets/img/carpetas.jpg",
+        "img": "assets/img/carpetas.jpg",
         "tipo": "cuadernos"
     },
     {
@@ -77,7 +77,7 @@
         "marca": "BIC",
         "descripcion": "Caja de lapiceras azules x 50",
         "precio": 3000,
-        "img": "../assets/img/lapicerasbic.jpg",
+        "img": "assets/img/lapicerasbic.jpg",
         "tipo": "utiles"
     },
     {
@@ -85,7 +85,7 @@
         "marca": "Faber Castell",
         "descripcion": "Marcadores de colores x 36",
         "precio": 1300,
-        "img": "../assets/img/marcadores.jpg",
+        "img": "assets/img/marcadores.jpg",
         "tipo": "utiles"
     },
     {
@@ -93,7 +93,7 @@
         "marca": "Casio",
         "descripcion": "Calculadora científica avanzada",
         "precio": 8000,
-        "img": "../assets/img/calculadora2.jpg",
+        "img": "assets/img/calculadora2.jpg",
         "tipo": "calculadoras"
     }
 ]
