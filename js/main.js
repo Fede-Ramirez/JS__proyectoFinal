@@ -266,7 +266,6 @@ async function obtenerJSON() {
 
 //Función para obtener el valor del dolar blue en tiempo real a través de una API.
 async function obtenerValorDolar() {
-    // const URLDOLAR = "https://api-dolar-argentina.herokuapp.com/api/dolarblue";
     const URLDOLAR = "https://api.bluelytics.com.ar/v2/latest";
     const resp=await fetch(URLDOLAR)
     const data=await resp.json()
