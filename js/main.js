@@ -2,7 +2,7 @@
 
 // Declaración de variables
 let carrito;
-// Si ya hay un carrito guardado en el local storage lo traemos tal como está, si no será un array vacío de momento
+// Si ya hay un carrito guardado en el local storage lo traemos tal como está, si no será un array vacío de momento.
 carrito = JSON.parse(localStorage.getItem('carrito')) || []
 let productosJSON = [];
 let dolarCompra;
@@ -12,7 +12,8 @@ let finalizarCompra = document.getElementById("finalizar");
 let vaciarCarrito = document.getElementById("vaciar");
 let campoSuscripcion = document.getElementById("suscripcion");
 let suscripcion = document.getElementById("suscribirse");
-// Si el carrito está vacio el usuario podrá visualizarlo en la tabla de los productos, si no, no verá el aviso pues habrá productos en el carrito
+// Si el carrito está vacio el usuario podrá visualizar un aviso en la tabla de los productos 
+// si no, no verá el aviso pues habrá productos en el carrito
 carrito.length === 0 ? vacio.innerHTML = `<strong>El carrito está vacío</strong>` : vacio.innerHTML = ``
 
 //Evento para cuando la ventana está cargada
@@ -28,7 +29,8 @@ window.onload=()=>{
 
 // Funciones
 
-// La idea de esta función es el renderizado de un array de productos mediante el uso de un ciclo for para que se muestren en el html y poder agregarlos al carrito
+// La idea de esta función es el renderizado de un array de productos mediante el uso de un ciclo for 
+// para que se muestren en el html y poder agregarlos al carrito
 function mostrarProductos(array) {
     console.log(array);
     for (const producto of array) {
@@ -106,6 +108,7 @@ function agregarAlCarrito (productoComprado) {
         carrito[posicion].cantidad += 1;
         document.getElementById(productoComprado.id).innerHTML=carrito[posicion].cantidad;
 
+        // Toast que notificará el agregado de un producto repetido
         Toastify({
             text: `Agregaste otra unidad de ${productoComprado.descripcion} al carrito`,
             duration: 3000,
@@ -127,7 +130,8 @@ function agregarAlCarrito (productoComprado) {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-// Si al ingresar al sitio ya hay un carrito guardado en el local storage, lo traemos con esta función y el usuario podrá visualizarlo en la tabla y seguir agregando productos si así lo desea.
+// Si al ingresar al sitio ya hay un carrito guardado en el local storage, lo traemos con esta función
+// y el usuario podrá visualizarlo en la tabla y seguir agregando productos si así lo desea. 
 function actualizarTabla () {
     for (const producto of carrito) {
         tabla.innerHTML += (`
@@ -145,22 +149,26 @@ function actualizarTabla () {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-// Mediante esta función se calculará el total de la compra considerando los precios de los productos y la cantidad repetida de ellos en el carrito. 
+// Mediante esta función se calculará el total de la compra considerando los precios de los productos 
+// y la cantidad repetida de ellos en el carrito. 
 function calcularTotal() {
     let total = 0;
     // Se realiza una multiplicación entre el precio y la cantidad.
     for (const elemento of carrito) {
         total = total + (elemento.precio * elemento.cantidad);
     }
+    // Se retorna el valor total calculado, que aparecerá en el DOM.
     return total;
 }
 
-// El usuario podrá tener la posibilidad de eliminar un producto del carrito si así lo desea. Al realizarla también se elimina el producto del local storage y se actualiza el precio de compra.
+// El usuario podrá tener la posibilidad de eliminar un producto del carrito si así lo desea.
+// Al realizarla también se elimina el producto del local storage y se actualiza el precio de compra. 
 function quitarDelCarrito(id){
     let indice=carrito.findIndex(producto => producto.id==id);
     carrito.splice(indice,1);
     localStorage.setItem("carrito", JSON.stringify(carrito));
-
+    
+    // Toast que notificará la eliminación de un producto del carrito.
     Toastify({
         text: `Eliminaste un producto del carrito`,
         duration: 3000,
@@ -174,17 +182,17 @@ function quitarDelCarrito(id){
         onClick: function(){} // Callback after click
     }).showToast();
     
-    
-    // La fila del producto es removida
+    // La fila del producto es removida de la tabla
     let fila=document.getElementById(`fila${id}`);
     document.getElementById("tablaCarrito").removeChild(fila);
     carrito.length === 0 ? vacio.innerHTML = `<strong>El carrito está vacío</strong>` : vacio.innerHTML = ``
-
+    
     // El total de la compra se verá afectado también por la eliminación de un producto
     document.querySelector("#total").innerText=(`Total de su compra: $ ${calcularTotal()}`);
 }
 
-// Esta function permite reordenar los productos de un array de productos según determinados criterios que el usuario tendrá disponible en el apartado SELECCIONAR.
+// Esta function permite reordenar los productos de un array de productos según determinados criterios
+// que el usuario tendrá disponible en el apartado SELECCIONAR. 
 function seleccionarProductos(array) {
     let seleccion = document.querySelector("#seleccion").value;
     console.log(seleccion);
@@ -213,7 +221,9 @@ function seleccionarProductos(array) {
     mostrarProductos(array);
 }
 
-// Esta function permitirá al usuario filtrar por productos si este así lo desea. Tiene dentro la function seleccionarProductos para que se pueda reordenar por criterios en los productos filtrados. Cada filtro es una categoría de producto distinta que podrá visualizarse en el menú desplegable "FILTRAR"
+// Esta function permitirá al usuario filtrar por productos si este así lo desea. 
+// Cada condición tiene dentro la function seleccionar para que el usuario pueda
+// establecer criterios aún con los productos filtrados
 function filtrarProductos () {
     let filtrado = document.querySelector("#filtrado").value;
     console.log(filtrado)
@@ -253,14 +263,17 @@ function filtrarProductos () {
     }
 }
 
-//GETJSON de productos.json. Aquí traemos los productos desde el archivo JSON y los mostramos mediante la función mostrarProductos. 
+//GETJSON de productos.json. Aquí traemos los productos desde el archivo JSON 
+// y los mostramos mediante la función mostrarProductos. 
 async function obtenerJSON() {
     const URLJSON="/productos.json"
     const resp=await fetch("productos.json")
     const data= await resp.json()
     productosJSON = data;
     mostrarProductos(productosJSON);
-    // También se conecta con la function actualizarTabla mediante un operador lógico AND. actualizarTabla solo se ejecutará en caso de que el array de carrito no este vacío, lease que ya traiga productos desde el storage.
+    // También se conecta con la function actualizarTabla mediante un operador lógico AND. 
+    // actualizarTabla solo se ejecutará en caso de que el array de carrito no este vacío
+    // lease que ya traiga productos desde el storage. 
     carrito.length !== 0 && actualizarTabla()
 }
 
@@ -287,7 +300,9 @@ finalizarCompra.onclick=()=>{
             text: 'Debes llenar el carrito para continuar',
         }) 
     } else {
-        // Una vez presionado le saltará una alerta y se desplegará un formulario que deberá completar con algunos datos.
+        // Si hay al menos un producto se ejecutará esta condición
+        // Una vez presionado le saltará una alerta y se desplegará un formulario que deberá completar 
+        // con algunos datos.
         Swal.fire({
             title: 'Deseas avanzar con la compra?',
             text: "Selecciona una opción",
@@ -353,6 +368,7 @@ finalizarCompra.onclick=()=>{
                         </div>
                         </form>`
                         
+                        // Evento para validación de formulario al presionar enviar
                         let confirmacionCompra = document.getElementById("confirmacionCompra");
                         confirmacionCompra.addEventListener("submit", validarCompra); 
                         
