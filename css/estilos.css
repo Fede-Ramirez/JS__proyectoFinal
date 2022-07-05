@@ -49,6 +49,15 @@ li {
 
 #formularioCompra {
     margin: 10px 0px;
+    background-color: ghostwhite;
+}
+
+.formulario {
+    margin: 10px 0px;
+}
+
+.formularioContacto {
+    background-color: ghostwhite;
 }
 
 .carritoIcono {
@@ -74,4 +83,8 @@ li {
 .contenedorBotones {
     display: flex; 
     justify-content: space-evenly;
+}
+
+#nombreInvalido {
+    color: red;
 }

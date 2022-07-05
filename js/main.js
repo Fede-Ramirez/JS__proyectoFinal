@@ -311,7 +311,7 @@ finalizarCompra.onclick=()=>{
                         <div>
                         <p>Por favor, completa el siguiente formulario de compra y un vendedor se comunicará contigo para concretar la entrega.</p>
                         </div>
-                        <form class="row gy-2 gx-3 align-items-center" id="confirmacionCompra">
+                        <form class="row gy-2 gx-3 align-items-center formulario" id="confirmacionCompra">
                         <div class="col-auto">
                         <label class="visually-hidden" for="autoSizingInput">Name</label>
                         <input type="text" class="form-control" id="autoSizingInput" placeholder="Nombre y Apellido" required>
@@ -338,6 +338,7 @@ finalizarCompra.onclick=()=>{
                         <option value="1">Mercado pago</option>
                         <option value="2">Débito</option>
                         <option value="3">Crédito</option>
+                        <option value="4">Efectivo</option>
                         </select>
                         </div>
                         <div class="col-auto">
@@ -432,3 +433,4 @@ suscripcion.onclick=()=>{
         }) 
     }
 }
+
